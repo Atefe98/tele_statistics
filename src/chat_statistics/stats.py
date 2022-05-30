@@ -1,5 +1,4 @@
 import json
-from collections import Counter
 from pathlib import Path
 from typing import Union
 
@@ -34,7 +33,12 @@ class ChatStatistics:
         self.stop_words = list(map(self.normalizer.normalize, stop_words))
 
 
-    def generate_word_cloud(self, output_dir: Union[str, Path]):
+    def generate_word_cloud(
+        self,
+        output_dir: Union[str, Path],
+        width: int=800, height: int=600,
+        max_font_size: int=250,
+    ):
         """Generates a word cloud from the chat data
 
         :param output_dir: path to output directory for word cloud image
@@ -57,7 +61,7 @@ class ChatStatistics:
         wordcloud = WordCloud(
             width=1200, height=1200,
             font_path=str(DATA_DIR / 'BHoma.ttf'),
-            background_color='white'
+            background_color='black'
         ).generate(text_content)
 
         logger.info(f"Saving word cloud to {output_dir}")
